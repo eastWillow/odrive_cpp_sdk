@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(odrive_cpp_sdk)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -28,3 +29,8 @@ add_library(odrive_cpp_sdk
 target_link_libraries(odrive_cpp_sdk ${catkin_LIBRARIES} ${LIBUSB1_LIBRARIES})
 
 add_dependencies(odrive_cpp_sdk ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(odrive_test
+  src/main.cpp
+)
+target_link_libraries(odrive_test odrive_cpp_sdk)
